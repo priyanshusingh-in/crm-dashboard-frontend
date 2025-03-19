@@ -3,21 +3,21 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { Box, Typography, Paper } from '@mui/material';
 
 function LeadsLineChart({ leadsData }) {
-  // Transform leads data into chart format
-  const trendData = [
-    { month: 'Jan', high: 0, medium: 0, low: 0 },
-    { month: 'Feb', high: 0, medium: 0, low: 0 },
-    { month: 'Mar', high: 0, medium: 0, low: 0 },
-    { month: 'Apr', high: 0, medium: 0, low: 0 },
-    { month: 'May', high: 0, medium: 0, low: 0 }
-  ];
+  // Initialize trend data with months and zero counts
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
+  const trendData = months.map(month => ({
+    month,
+    high: 0,
+    medium: 0,
+    low: 0
+  }));
 
   // Count leads by month and priority
   Object.entries(leadsData).forEach(([priority, leads]) => {
     leads.forEach(lead => {
-      const monthData = trendData.find(data => data.month === lead.month);
-      if (monthData) {
-        monthData[priority]++;
+      const monthIndex = months.indexOf(lead.month);
+      if (monthIndex !== -1) {
+        trendData[monthIndex][priority]++;
       }
     });
   });
